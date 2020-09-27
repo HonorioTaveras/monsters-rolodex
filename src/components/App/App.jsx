@@ -3,7 +3,7 @@ import './App.css';
 import Axios from 'axios';
 
 // COMPONENTS
-import monsterData from './components/dummData.js';
+import { CardList } from '../CardList/CardList.jsx';
 
 export default function App() {
   const [err, setErr] = useState(null);
@@ -20,18 +20,12 @@ export default function App() {
         setIsLoaded(true);
         setErr(err);
       }
-    )
-  }, [])
+    );
+  }, []);
 
   return (
-    <div className="App">
-      {
-        monsters.map((monster) => (
-          <h1 key={monster.id}>
-            {monster.name}
-          </h1>
-        ))
-      }
+    <div className='App'>
+      <CardList monsters={monsters} />
     </div>
   );
 }
