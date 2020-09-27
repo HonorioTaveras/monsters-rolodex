@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import Axios from 'axios';
 
-function App() {
+// COMPONENTS
+import monsterData from './components/dummData.js';
+
+export default function App() {
+  const [err, setErr] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [monsters, setMonsters] = useState([]);
+
+  useEffect(() => {
+    Axios.get('https://jsonplaceholder.typicode.com/users').then(
+      (res) => {
+        setIsLoaded(true);
+        setMonsters(res.data);
+      },
+      (err) => {
+        setIsLoaded(true);
+        setErr(err);
+      }
+    )
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {
+        monsters.map((monster) => (
+          <h1 key={monster.id}>
+            {monster.name}
+          </h1>
+        ))
+      }
     </div>
   );
 }
-
-export default App;
