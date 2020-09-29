@@ -27,19 +27,27 @@ export default function App() {
 
   const handleChange = (e) => {
     setSearchField(e.target.value);
-  }
+  };
 
   const filteredMonsters = monsters.filter((monster) =>
     monster.name.toLowerCase().includes(searchField.toLowerCase())
   );
 
+  if (err) {
+    return (
+      <div>
+        Error:
+        {err.message}
+      </div>
+    );
+  }
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className='App'>
       <h1>Monsters Rolodex</h1>
-      <SearchBox
-        placeholder="search monsters"
-        handleChange={handleChange}
-      />
+      <SearchBox placeholder='search monsters' handleChange={handleChange} />
       <CardList monsters={filteredMonsters} />
     </div>
   );
